@@ -1,25 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./index.css";
+import { Routes, Route } from "react-router-dom";
 
+import { ProSidebarProvider } from "react-pro-sidebar";
+
+// Global Component
+import SideBar from "./pages/global/SideBar";
+import Topbar from "./pages/global/Topbar";
+
+//Components
+import Album from "./pages/album";
+import Track from "./pages/track";
+import Playlist from "./pages/playlist";
+import Genre from "./pages/genre";
+import Footer from "./components/Footer";
+import GlobalStateProvider from "./components/GlobalState";
+import ListTrack from "./pages/listTrack";
+
+// THEME
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "./theme";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <GlobalStateProvider>
+      <ProSidebarProvider>
+        <div className="App">
+          <SideBar />
+          <div className="wrapper">
+            <ThemeProvider theme={theme}>
+              <Topbar />
+              <Routes>
+                <Route path="/" element={<Genre />} />
+                <Route path="/album" element={<Album />} />
+                <Route path="/track" element={<Track />} />
+                <Route path="/playlist" element={<Playlist />} />
+                <Route path="/listTrack" element={<ListTrack />} />
+              </Routes>
+              <Footer />
+            </ThemeProvider>
+          </div>
+        </div>
+      </ProSidebarProvider>
+    </GlobalStateProvider>
   );
 }
 
